@@ -34,8 +34,7 @@ def normalize_payload(payload: dict):
 async def handle_customer_intent(intent: str, payload: dict):
     """Async handler for each customer data intent."""
     
-    # --- GET CUSTOMER INFO ALIASES ---
-    # Fixes the LLM hallucination: get_customer_info_by_id
+    # --- GET CUSTOMER INFO ALIASES (Fixes Scenario 1) ---
     if intent in ["get_customer_info", "get_customer_info_by_id"]:
         return await agent.invoke_tool("get_customer", normalize_payload(payload))
 
