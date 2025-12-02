@@ -35,7 +35,7 @@ def get_customer(customer_id: int) -> str:
 @mcp.tool()
 def list_customers(status: Optional[str] = None, tier: Optional[str] = None, limit: Optional[int] = 10) -> str:
     """Lists customers with optional filters for status or tier."""
-    result = db_utils.list_customers(DB_FILE, status=status, tier=tier, limit=limit)
+    result = db_utils.list_customers(DB_FILE, status_filter=status, tier_filter=tier, limit=limit)
     return json.dumps(result)
 
 @mcp.tool()
