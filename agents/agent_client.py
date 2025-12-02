@@ -58,7 +58,7 @@ def generate_error_response(orig_message, error_text):
 # 2. Agent Connector (The Client Logic)
 # ---------------------------------------------------------
 class AgentConnector:
-    def __init__(self, timeout_sec=5, max_attempts=3):
+    def __init__(self, timeout_sec=20, max_attempts=3):
         self.timeout = timeout_sec
         self.max_attempts = max_attempts
         # Determine path to MCP server app
