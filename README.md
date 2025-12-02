@@ -54,13 +54,6 @@ The system orchestrates three autonomous agents to handle complex customer queri
 
 ## Usage
 
-### Option A: Automated Startup
-
-* **Mac/Linux:** `./run_system.sh`
-* **Windows:** `run_system.bat`
-
-### Option B: Manual Startup
-
 Launch each agent in a separate terminal window:
 
 1.  **Data Agent:** `python -m agents.customer_data_agent`
