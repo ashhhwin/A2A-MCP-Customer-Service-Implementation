@@ -62,16 +62,17 @@ async def handle_support_intent(intent: str, payload: dict):
     response_data = {}
     action_description = ""
 
-    # --- UPGRADE REQUEST ALIASES (Fixes Scenario 2) ---
+    # --- UPGRADE REQUEST ALIASES (Fixes upgrade_account) ---
     if intent in ["upgrade_request", "upgrade_account"]:
         action_description = "Upgrade processed."
         response_data = {"status": "ok"}
 
-    # --- TICKET STATUS ALIASES (Fixes Scenario 5 & 3) ---
-    elif intent in ["show_ticket_status", "show_ticket_history", "get_active_customers_with_open_tickets"]:
+    # --- TICKET STATUS ALIASES (Fixes show_ticket_history, get_active_customers_with_open_tickets) ---
+    elif intent in ["show_ticket_status", "show_ticket_history", "get_active_customers_with_open_tickets", "get_customer_history"]:
         if not customer_id:
             return {"status": "error", "error": "Missing customer_id"}
         
+        # NOTE: We use list_tickets for status/history here
         tickets = await agent.invoke_tool("list_tickets", {"customer_ids": [customer_id]})
         
         if isinstance(tickets, list) and len(tickets) > 0:
@@ -82,7 +83,7 @@ async def handle_support_intent(intent: str, payload: dict):
             
         response_data = tickets
 
-    # --- ESCALATION/BILLING ALIASES (Fixes Scenario 6) ---
+    # --- ESCALATION/BILLING ALIASES (Fixes billing_issues) ---
     elif intent in ["escalate_issue", "billing_issues"]:
         reason = entities.get("reason") or text
         ticket = await agent.invoke_tool("create_ticket", {
